@@ -1,0 +1,25 @@
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places.
+
+Input Format
+
+The STATION table is described as follows:
+
+FIELD         TYPE 
+ID            NUMBER
+NAME          VARCHAR
+COUNTRYCODE   VARCHAR
+DISTRICT      VARCHAR
+POPULATION    NUMBER 
+
+where LAT_N is the northern latitude and LONG_W is the western longitude.
+
+************************************SOLUTION****************************************
+
+SET @ID:= -1;
+
+SELECT ROUND(AVG(T.LAT_N),4)
+FROM
+(SELECT LAT_N, @ID:= @ID +1 AS ID
+FROM STATION
+ORDER BY LAT_N) AS T
+WHERE ID IN (CEIL(@ID/2), FLOOR(@ID/2));
